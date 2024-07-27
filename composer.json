@@ -1,0 +1,12 @@
+{
+    "name": "karnas/check-task",
+    "description": "Aplikacja do zarzędzania zadaniami",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}

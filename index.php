@@ -22,8 +22,8 @@ $router->get('/user', 'UserController@userView');
 //user
 $router->get('/employee', 'EmployeeController@employeeView');
 $router->post('/employee-now', 'EmployeeController@employeeAdd');
-$router->post('/employee-edit', 'EmployeeController@employeeAdd');
-$router->post('/employee-del', 'EmployeeController@employeeAdd');
+$router->post('/employee-edit', 'EmployeeController@employeeEdit');
+$router->post('/employee-del', 'EmployeeController@employeeDel');
 //logaut
 $router->get('/logout', 'LoginController@logout');
 

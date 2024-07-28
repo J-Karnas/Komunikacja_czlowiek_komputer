@@ -6,9 +6,9 @@ namespace Core\View;
 
 class View
 {
-	public function render(string $page, array $params = []): void
+	public function render(string $page, array $elements = []): void
 	{
-		$params = $this->escape($params);
+		$elements = $this->escape($elements);
 		require_once("./templates/$page.php");
 	}
 

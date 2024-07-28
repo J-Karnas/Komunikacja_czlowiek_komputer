@@ -1,0 +1,58 @@
+CREATE TABLE working_group(
+    id_group int NOT null AUTO_INCREMENT,
+    name_group varchar(50),
+    description varchar(200),
+    file_path varchar(30),
+    CONSTRAINT PK_id_group PRIMARY KEY (id_group)
+);
+
+CREATE TABLE employees(
+    id_employee int NOT NULL AUTO_INCREMENT, 
+	name varchar(20) NOT NULL,
+    last_name varchar(20) NOT NULL,
+    pesel varchar(11) NOT NULL,
+    phone varchar(9) NOT NULL,
+    email varchar(50),
+    pass varchar(255) NOT NULL,
+    previous_login DATETIME,
+    employee_right varchar(20) NOT NULL,
+    id_group int, 
+    CONSTRAINT PK_id_employee PRIMARY KEY (id_employee),
+    FOREIGN KEY (id_group) REFERENCES working_group(id_group)
+);
+
+CREATE TABLE task(
+    id_task int NOT NULL AUTO_INCREMENT, 
+	title varchar(20) NOT NULL,
+    description varchar(20) NOT NULL,
+    priority varchar(11) NOT NULL,
+    start_date DATETIME NOT NULL,
+    stop_date DATETIME NOT NULL,
+    file_path varchar(30),
+    CONSTRAINT PK_id_task PRIMARY KEY (id_task)
+);
+
+INSERT INTO employees VALUES (NULL, 'Janusz', 'Kowalski', '1234321234532', '123456789', 'j.kowalski@wp.pl', '1234567', NULL, 'manager', NULL);
+
+
+id_employee	
+name	
+last_name
+job_position	
+pesel	
+phone	
+email	
+pass	
+previous_login	
+employee_right	
+id_group	
+id_group	
+name_group	
+description	
+file_path	
+id_task_use	
+id_employee	
+id_task	
+count_task
+
+UPDATE employees SET name = , last_name = , job_position = , pesel = , phone = , email = , pass =  WHERE employees.id_employee = ;

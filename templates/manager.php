@@ -6,7 +6,10 @@
     <title>Manager</title>
 </head>
 <body>
-    Menager
+    <p>Pracownicy</p>
+    <a href="/employee">Przegląd pracowników</a><br>
+    <a href="/employee">Dodaj pracownika</a><br>
+
 
     <a href="/logout">Wyloguj</a>
 </body>

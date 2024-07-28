@@ -12,7 +12,7 @@ class LoginController{
     public function loginView() : Void{
 
         if(isset($_SESSION['status']) && $_SESSION['status'] = "login"){
-            $this->redirectGrant($_SESSION['userGrant']);
+            $this->redirectGrant($_SESSION['userRight']);
         }else{
             (new View())->render("login");
         }
@@ -41,12 +41,12 @@ class LoginController{
                 $loginMod->updateLastLogin($loggedInUser->id_employee);
                 $this->createUserSession($loggedInUser);
             } else {
-                $_SESSION["error"] = "Uzupełnij wymagane dane";
+                $_SESSION["error"] = "Nie udało się zalogować";
                 forwarding("/");
             }
             
         } else {
-            $_SESSION["error"] = "Uzupełnij wymagane dane";
+            $_SESSION["error"] = "Dane logowania są nieporawne";
             forwarding("/");
         }
         

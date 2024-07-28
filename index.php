@@ -13,15 +13,21 @@ $router = new \Core\Tools\Router();
 $router->get('/', 'LoginController@loginView');
 $router->post('/login-now', 'LoginController@login');
 
-//register
-$router->get('/register', 'RegisterController@registerView');
-$router->post('/register-now', 'RegisterController@register');
-
+//manager
 $router->get('/manager', 'ManagerController@managerView');
 
+//user
 $router->get('/user', 'UserController@userView');
 
+//user
+$router->get('/employee', 'EmployeeController@employeeView');
+$router->post('/employee-now', 'EmployeeController@employeeAdd');
+$router->post('/employee-edit', 'EmployeeController@employeeAdd');
+$router->post('/employee-del', 'EmployeeController@employeeAdd');
+//logaut
 $router->get('/logout', 'LoginController@logout');
+
+$router->get('/unaut-access', 'AccessController@unautAccess');
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $router->dispatch($uri);

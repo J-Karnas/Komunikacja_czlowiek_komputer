@@ -9,6 +9,9 @@
     <p>Pracownicy</p>
     <a href="/employee">Przegląd pracowników</a><br>
     <a href="/employee">Dodaj pracownika</a><br>
+    <br>
+    <a href="/group">Przegląd grup</a><br>
+    <a href="/group">Dodaj grupe</a><br>
 
 
     <a href="/logout">Wyloguj</a>

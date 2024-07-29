@@ -56,3 +56,8 @@ id_task
 count_task
 
 UPDATE employees SET name = , last_name = , job_position = , pesel = , phone = , email = , pass =  WHERE employees.id_employee = ;
+
+
+INSERT INTO working_group VALUES (NULL, 'Grupa 3', 'Lorem ipsuuummmm', '2', NULL);
+
+UPDATE working_group SET name_group = 'Jakaś nazwa22', `description` = 'lormaaaa', file_path = 'qwertyy' WHERE `working_group`.`id_group` = 7;

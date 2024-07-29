@@ -17,6 +17,8 @@ class EmployeeController{
             $registerModel = new EmployeeModel();
             
             $paramTable['EmployeeShow'] = $registerModel->EmployeeShow();
+            $paramTable['EmployeeShowAll'] = $registerModel->EmployeeShowAll();
+
             $paramTable['GroupShow'] = $registerModel->GroupShow();
             (new View())->render("employee", $paramTable);
         }else{
@@ -110,8 +112,6 @@ class EmployeeController{
         
     }
 
-
-
     private function getUserRole()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -139,9 +139,10 @@ class EmployeeController{
             'phone' => trim($_POST['phone']),
             'usersEmail' => trim($_POST['usersEmail']),
             'usersPwd' => trim($_POST['usersPwd']),
+            'employeeGroup' => trim($_POST['employeeGroup']),
         ];
-        
-        if (empty($data['firsName']) || empty($data['lastName']) || empty($data['jobPosition']) || empty($data['PESEL']) || empty($data['phone']) || empty($data['usersEmail']) || empty($data['usersPwd'])) {
+
+        if (empty($data['firsName']) || empty($data['lastName']) || empty($data['jobPosition']) || empty($data['PESEL']) || empty($data['phone']) || empty($data['usersEmail'])) {
             $_SESSION["error"] = "Uzupełnij wymagane dane";
             forwarding("/employee");
         }
@@ -182,17 +183,18 @@ class EmployeeController{
             forwarding("/employee");
         }
 
-        if(strlen($data['usersPwd']) < 6){
-            $_SESSION["error"] = "Niepoprawne hasło";
-            forwarding("/employee");
+        if (!empty($data['usersPwd'])) {
+            if(strlen($data['usersPwd']) < 6){
+                $_SESSION["error"] = "Niepoprawne hasło";
+                forwarding("/employee");
+            }
+            $data['usersPwd'] = password_hash($data['usersPwd'], PASSWORD_DEFAULT);
         }
 
-        if($registerMod->findEmail($data['usersEmail'])){
-            $_SESSION["error"] = "Adres email jest już zajęty";
-            forwarding("/employee");
+        if (isset($_POST['delGroup']) && $_POST['delGroup'] === 'checked') {
+            $data['employeeGroup'] = "BRAK";
         }
 
-        $data['usersPwd'] = password_hash($data['usersPwd'], PASSWORD_DEFAULT);
 
         if($registerMod->EmployeeEdit($data)){
             $_SESSION["error"] = "Udało się";

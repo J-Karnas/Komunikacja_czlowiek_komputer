@@ -53,6 +53,8 @@ class LoginController{
     }
 
     private function redirectGrant(string $grant):void{
+        require_once 'core/tools/forwarding.php';
+
         switch ($grant) {
             case 'manager':
                 forwarding("/manager");
@@ -61,7 +63,7 @@ class LoginController{
                 forwarding("/user");
                 break;
             default:
-                forwarding("/access-denied");
+                forwarding("/unaut-access");
                 break;
         }
     }

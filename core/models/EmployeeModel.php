@@ -50,8 +50,20 @@ class EmployeeModel{
     }
 
     public function EmployeeShow(){
-        $this->connect->query('SELECT * , COUNT(task_use.id_task_use) AS count_task FROM employees INNER JOIN working_group ON working_group.id_group = employees.id_group INNER JOIN task_use ON task_use.id_employee = employees.id_employee GROUP BY employees.name, employees.id_employee;');
+        // $this->connect->query('SELECT * , COUNT(task_use.id_task_use) AS count_task FROM employees INNER JOIN working_group ON working_group.id_group = employees.id_group INNER JOIN task_use ON task_use.id_employee = employees.id_employee GROUP BY employees.name, employees.id_employee;');
+        
+        $this->connect->query('SELECT * FROM employees INNER JOIN working_group ON working_group.id_group = employees.id_group');
+        $row = $this->connect->allArray();
     
+        if($this->connect->Count() > 0){
+            return $row;
+        }else{
+            return false;
+        }
+    }
+
+    public function EmployeeShowAll(){
+        $this->connect->query('SELECT * FROM employees WHERE id_group IS NULL;');
         $row = $this->connect->allArray();
     
         if($this->connect->Count() > 0){
@@ -63,7 +75,7 @@ class EmployeeModel{
 
     public function EmployeeEdit($data){
 
-        $this->connect->query('UPDATE employees SET name = :name, last_name = :lastname, job_position = :jobposition, pesel = :pesel, phone = :phone, email = :email, pass = :password WHERE employees.id_employee = :id ;');
+        $this->connect->query('UPDATE employees SET name = :name, last_name = :lastname, job_position = :jobposition, pesel = :pesel, phone = :phone, email = :email, pass = :password, id_group = :group WHERE employees.id_employee = :id ;');
         $this->connect->bind(':name', $data['firsName']);
         $this->connect->bind(':lastname', $data['lastName']);
         $this->connect->bind(':jobposition', $data['jobPosition']);
@@ -72,6 +84,19 @@ class EmployeeModel{
         $this->connect->bind(':email', $data['usersEmail']);
         $this->connect->bind(':password', $data['usersPwd']);
         $this->connect->bind(':id', $data['id']);
+        if($data['employeeGroup'] != "BRAK")
+        {
+            $this->connect->bind(':group', $data['employeeGroup']);
+        }else{
+            $this->connect->bind(':group', null);
+        }
+
+        if($this->connect->execute()){
+            return true;
+        }else{
+            return false;
+        }
+
         if($this->connect->execute()){
             return true;
         }else{

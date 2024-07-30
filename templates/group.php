@@ -18,12 +18,35 @@ require_once './core/tools/errorhan.php';
             document.getElementById('editForm').style.display = 'block';
         }
     </script>
+
+    <style>
+       body {
+    font-family: Arial, sans-serif;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .box {
+        width: 30%;
+        padding: 20px;
+        margin: 10px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+    }
+    </style>
 </head>
 <body>
     <h1>Grupy</h1>
 
-    <?php errorhand('error') ?>
 
+    <div class="container">
+
+    <div class="box">
+    <?php errorhand('error') ?>
     <form method="post" action="/group">
         <input type="text" name="groupName" placeholder="Nazwa grupy"><br>
         <br>
@@ -33,34 +56,8 @@ require_once './core/tools/errorhan.php';
         <br>
         <button type="submit" name="submit">Dodaj</button>
     </form>
-    <br>
-
-    <div>
-        <?php if(!empty($elements['GroupShow'])) : ?>
-        <?php foreach ($elements['GroupShow'] as $group): ?>
-        <div>
-            <p><?php echo $group['id_group']; ?></p>
-            <p><?php echo $group['name_group']; ?></p>
-            <p><?php echo $group['description']; ?></p>
-            <p><?php echo $group['file_path']; ?></p>
-            <p>
-                <form action="/group-del" method="post" style="display:inline;">
-                    <input type="hidden" name="id" value="<?php echo $group['id_group']; ?>">
-                    <button type="submit">Delete</button>
-                </form>
-                <button onclick="editGroup(
-                '<?php echo $group['id_group'];?>',
-                '<?php echo $group['name_group'];?>',
-                '<?php echo $group['description'];?>',
-                '<?php echo $group['file_path'];?>'
-                )">Edit</button>
-            </p>
-        </div>
-        <?php endforeach; ?>
-        <?php endif; ?>
-    <div>
     <div id="editForm" style="display:none;">
-        <h2>Edytuj notatke</h2>
+        <h2>Edytuj grupe</h2>
         <form action="/group-edit" method="post">
             <input type="hidden" id="edit_id" name="id">
             <label for="edit_name">Nazwa:</label>
@@ -69,7 +66,10 @@ require_once './core/tools/errorhan.php';
             <label for="edit_description">Opis..:</label>
             <input type="text" id="edit_description" name="groupDescription">
             <br>
-            <label for="edit_file_path">Picture:</label>
+            <label for="edit_file_path">Załącznik:</label>
+            <input type="text" id="edit_file_path" name="file_path">
+            <br>
+            Dodaj pracownika:
             <select name="employeeGroupEmploye" id="employeeGroupEmploye">
             <?php foreach ($elements['GroupShowEmploye'] as $GroupEmploye): ?>
                 <option value="<?php echo $GroupEmploye['id_employee']; ?>">
@@ -80,11 +80,40 @@ require_once './core/tools/errorhan.php';
                     NULL
                 </option>  
             </select>
-            <input type="text" id="edit_file_path" name="file_path">
-
-            <button type="submit">Save Changes</button>
+            <br>
+            <button type="submit">Zapisz</button>
         </form>
     </div>
 
+
+
+    </div>
+    <br>
+
+    <div class="box">
+        <?php if(!empty($elements['GroupShow'])) : ?>
+        <?php foreach ($elements['GroupShow'] as $group): ?>
+        <div style="border: solid black 1px;">
+            <p><?php echo $group['id_group']; ?></p>
+            <p><?php echo $group['name_group']; ?></p>
+            <p><?php echo $group['description']; ?></p>
+            <p><?php echo $group['file_path']; ?></p>
+            <p>
+                <form action="/group-del" method="post" style="display:inline;">
+                    <input type="hidden" name="id" value="<?php echo $group['id_group']; ?>">
+                    <button type="submit">Usuń</button>
+                </form>
+                <button onclick="editGroup(
+                '<?php echo $group['id_group'];?>',
+                '<?php echo $group['name_group'];?>',
+                '<?php echo $group['description'];?>',
+                '<?php echo $group['file_path'];?>'
+                )">Edytuj</button>
+            </p>
+        </div>
+        <?php endforeach; ?>
+        <?php endif; ?>
+        </div>
+    </div>
 </body>
 </html>

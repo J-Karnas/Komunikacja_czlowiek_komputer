@@ -10,11 +10,14 @@ require_once './core/tools/errorhan.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CheckTask</title>
     <script>
-        function editGroup(id, name, description, file_path) {
+        function editTask(id, title, description, priority, status, start_date, stop_date) {
             document.getElementById('edit_id').value = id;
-            document.getElementById('edit_name').value = name;
+            document.getElementById('edit_title').value = title;
             document.getElementById('edit_description').value = description;
-            document.getElementById('edit_file_path').value = file_path;
+            document.getElementById('edit_priority').value = priority;
+            document.getElementById('edit_status').value = status;
+            document.getElementById('edit_start_date').value = start_date;
+            document.getElementById('edit_stop_date').value = stop_date;
             document.getElementById('editForm').style.display = 'block';
         }
     </script>
@@ -88,6 +91,43 @@ require_once './core/tools/errorhan.php';
     </form>
     <br>
 
+    <div id="editForm" style="display:none;">
+        <h2>Edytuj zadanie</h2>
+        <form action="/task-edit" method="post">
+            <input type="hidden" id="edit_id" name="id">
+            <label for="edit_title">Tytuł:</label>
+            <input type="text" id="edit_title" name="taskTitle">
+            <br>
+            <label for="edit_description">Opis:</label>
+            <input type="text" id="edit_description" name="taskDescription">
+            <br>
+            Priorytet:
+            <select id="edit_priority" name="priority">
+                <option value="I">I</option>
+                <option value="II">II</option>
+                <option value="III">III</option>
+                <option value="IV">IV</option>
+                <option value="V">V</option>
+            </select>
+            <br>
+            <br>
+            Status:
+            <select id="edit_status" name="status">
+                <option value="during">during</option>
+                <option value="not_started">not started</option>
+                <option value="ended">ended</option>
+            </select>
+            <br>
+            <label for="edit_start_date">Data rozpoczęcia:</label>
+            <input type="datetime-local" id="edit_start_date" name="start_date" placeholder="Data rozpoczęcia"required>
+            <br>
+            <label for="edit_stop_date">Deadline:</label>
+            <input type="datetime-local" id="edit_stop_date" name="stop_date" placeholder="Data zakończenia"required>
+            <br>
+            <button type="submit">Zapisz</button>
+        </form>
+    </div>
+
     <div class="container">
         <div class="box">
             <h3>Nierozpoczęte</h3>
@@ -101,18 +141,19 @@ require_once './core/tools/errorhan.php';
                 <p><?php echo $task['priority']; ?></p>
                 <p><?php echo $task['last_edit']; ?></p>
                 <p>
-                    <form action="/group-del" method="post" style="display:inline;">
+                    <form action="/task-del" method="post" style="display:inline;">
                         <input type="hidden" name="id" value="<?php echo $task['id_task']; ?>">
-                        <button type="submit">Delete</button>
+                        <button type="submit">Usuń</button>
                     </form>
-                    <button onclick="editGroup(
+                    <button onclick="editTask(
                     '<?php echo $task['id_task'];?>',
                     '<?php echo $task['title'];?>',
                     '<?php echo $task['description'];?>',
                     '<?php echo $task['priority'];?>',
+                    '<?php echo $task['status'];?>',
                     '<?php echo $task['start_date'];?>',
                     '<?php echo $task['stop_date'];?>'
-                    )">Edit</button>
+                    )">Edytuj</button>
                 </p>
             </div>
             <?php endforeach; ?>
@@ -130,18 +171,19 @@ require_once './core/tools/errorhan.php';
                 <p><?php echo $task['priority']; ?></p>
                 <p><?php echo $task['last_edit']; ?></p>
                 <p>
-                    <form action="/group-del" method="post" style="display:inline;">
+                    <form action="/task-del" method="post" style="display:inline;">
                         <input type="hidden" name="id" value="<?php echo $task['id_task']; ?>">
-                        <button type="submit">Delete</button>
+                        <button type="submit">Usuń</button>
                     </form>
-                    <button onclick="editGroup(
+                    <button onclick="editTask(
                     '<?php echo $task['id_task'];?>',
                     '<?php echo $task['title'];?>',
                     '<?php echo $task['description'];?>',
                     '<?php echo $task['priority'];?>',
+                    '<?php echo $task['status'];?>',
                     '<?php echo $task['start_date'];?>',
                     '<?php echo $task['stop_date'];?>'
-                    )">Edit</button>
+                    )">Edytuj</button>
                 </p>
             </div>
             <?php endforeach; ?>
@@ -159,18 +201,19 @@ require_once './core/tools/errorhan.php';
                 <p><?php echo $task['priority']; ?></p>
                 <p><?php echo $task['last_edit']; ?></p>
                 <p>
-                    <form action="/group-del" method="post" style="display:inline;">
+                    <form action="/task-del" method="post" style="display:inline;">
                         <input type="hidden" name="id" value="<?php echo $task['id_task']; ?>">
-                        <button type="submit">Delete</button>
+                        <button type="submit">Usuń</button>
                     </form>
-                    <button onclick="editGroup(
+                    <button onclick="editTask(
                     '<?php echo $task['id_task'];?>',
                     '<?php echo $task['title'];?>',
                     '<?php echo $task['description'];?>',
                     '<?php echo $task['priority'];?>',
+                    '<?php echo $task['status'];?>',
                     '<?php echo $task['start_date'];?>',
                     '<?php echo $task['stop_date'];?>'
-                    )">Edit</button>
+                    )">Edytuj</button>
                 </p>
             </div>
             <?php endforeach; ?>
@@ -180,32 +223,7 @@ require_once './core/tools/errorhan.php';
     <div>
         
     <div>
-    <div id="editForm" style="display:none;">
-        <h2>Edytuj notatke</h2>
-        <form action="/group-edit" method="post">
-            <input type="hidden" id="edit_id" name="id">
-            <label for="edit_name">Nazwa:</label>
-            <input type="text" id="edit_name" name="groupName">
-            <br>
-            <label for="edit_description">Opis..:</label>
-            <input type="text" id="edit_description" name="groupDescription">
-            <br>
-            <label for="edit_file_path">Picture:</label>
-            <select name="employeeGroupEmploye" id="employeeGroupEmploye">
-            <?php foreach ($elements['GroupShowEmploye'] as $GroupEmploye): ?>
-                <option value="<?php echo $GroupEmploye['id_employee']; ?>">
-                    <?php echo $GroupEmploye['name'] . " " . $GroupEmploye['last_name']; ?>
-                </option>   
-            <?php endforeach; ?>
-                <option value="BRAK" selected>
-                    NULL
-                </option>  
-            </select>
-            <input type="text" id="edit_file_path" name="file_path">
-
-            <button type="submit">Save Changes</button>
-        </form>
-    </div>
+    
 
 </body>
 </html>

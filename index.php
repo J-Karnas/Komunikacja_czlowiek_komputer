@@ -34,6 +34,8 @@ $router->post('/group-del', 'GroupController@groupDel');
 //task
 $router->get('/task', 'TaskController@taskView');
 $router->post('/task', 'TaskController@taskAdd');
+$router->post('/task-edit', 'TaskController@taskEdit');
+$router->post('/task-del', 'TaskController@taskDel');
 
 
 //logaut

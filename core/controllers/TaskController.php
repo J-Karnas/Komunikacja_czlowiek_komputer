@@ -76,62 +76,59 @@ class TaskController{
         
     }
 
-    // public function groupEdit() : Void{
+    public function taskEdit() : Void{
 
-    //     require_once 'core/tools/forwarding.php';
+        require_once 'core/tools/forwarding.php';
         
-    //     $groupMod = new GroupModel();
+        $taskMod = new TaskModel();
 
-    //     $data = [
-    //         'id' => $_POST['id'],
-    //         'groupName' => trim($_POST['groupName']),
-    //         'groupDescription' => trim($_POST['groupDescription']),
-    //         'file_path' => trim($_POST['file_path']),
-    //         'employeeGroupEmploye' => trim($_POST['employeeGroupEmploye'])
-    //     ];
+        $data = [
+            'id' => $_POST['id'],
+            'taskTitle' => trim($_POST['taskTitle']),
+            'taskDescription' => trim($_POST['taskDescription']),
+            'priority' => trim($_POST['priority']),
+            'status' => trim($_POST['status']),
+            'startDate' => trim($_POST['start_date']),
+            'stopDate' => trim($_POST['stop_date'])
+        ];
         
-    //     if (empty($data['groupName']) || empty($data['groupDescription'])) {
-    //         $_SESSION["error"] = "Uzupełnij wymagane dane";
-    //         forwarding("/group");
-    //     }
+        if (empty($data['id']) || empty($data['taskTitle']) || empty($data['taskDescription']) || empty($data['priority']) || empty($data['status']) || empty($data['startDate']) || empty($data['stopDate'])) {
+            $_SESSION["error"] = "Uzupełnij wymagane dane";
+            forwarding("/task");
+        }
 
-    //     if($data['employeeGroupEmploye'] != "BRAK")
-    //     {
-    //         $groupMod->GroupAddEmploye($data);
-    //     }
+        if($taskMod->TaskEdit($data)){
+            $_SESSION["error"] = "Udało się";
+            forwarding("/task");
+        }else{
+            $_SESSION["error"] = "Coś poszło nie tak";
+            forwarding("/task");
+        }
 
-    //     if($groupMod->GroupEdit($data)){
-    //         $_SESSION["error"] = "Udało się";
-    //         forwarding("/group");
-    //     }else{
-    //         $_SESSION["error"] = "Coś poszło nie tak";
-    //         forwarding("/group");
-    //     }
+    }
 
-    // }
+    public function taskDel() : Void{
 
-    // public function groupDel() : Void{
-
-    //     require_once 'core/tools/forwarding.php';
+        require_once 'core/tools/forwarding.php';
         
-    //     $groupMod = new GroupModel();
+        $taskMod = new TaskModel();
 
-    //     $data = [
-    //         'id' => $_POST['id']
-    //     ];
+        $data = [
+            'id' => $_POST['id']
+        ];
 
-    //     if (empty($data['id'])) {
-    //         $_SESSION["error"] = "Błąd przesłania ID";
-    //         forwarding("/group");
-    //     }
+        if (empty($data['id'])) {
+            $_SESSION["error"] = "Błąd przesłania ID";
+            forwarding("/task");
+        }
 
-    //     if($groupMod->GroupDel($data)){
-    //         $_SESSION["error"] = "Udało się usunąć";
-    //         forwarding("/group");
-    //     }else{
-    //         $_SESSION["error"] = "Błąd";
-    //         forwarding("/group");
-    //     }
+        if($taskMod->TaskDel($data)){
+            $_SESSION["error"] = "Udało się usunąć";
+            forwarding("/task");
+        }else{
+            $_SESSION["error"] = "Błąd";
+            forwarding("/task");
+        }
 
-    // }
+    }
 }

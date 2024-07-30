@@ -31,6 +31,10 @@ $router->post('/group', 'GroupController@groupAdd');
 $router->post('/group-edit', 'GroupController@groupEdit');
 $router->post('/group-del', 'GroupController@groupDel');
 
+//task
+$router->get('/task', 'TaskController@taskView');
+$router->post('/task', 'TaskController@taskAdd');
+
 
 //logaut
 $router->get('/logout', 'LoginController@logout');

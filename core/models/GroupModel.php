@@ -17,28 +17,8 @@ class GroupModel{
         $this->connect->bind(':groupName', $data['groupName']);
         $this->connect->bind(':groupDescription', $data['groupDescription']);
         $this->connect->bind(':file_path', $data['file_path']);
-        // if($data['employeeGroup'] != "BRAK")
-        // {
-        //     $this->connect->bind(':group', $data['employeeGroup']);
-        // }else{
-        //     $this->connect->bind(':group', null);
-        // }
-
         if($this->connect->execute()){
             return true;
-        }else{
-            return false;
-        }
-    }
-
-    public function findEmail($email){
-        $this->connect->query('SELECT * FROM employees WHERE email = :email');
-        $this->connect->bind(':email', $email);
-    
-        $row = $this->connect->single();
-    
-        if($this->connect->Count() > 0){
-            return $row;
         }else{
             return false;
         }
